@@ -1,21 +1,31 @@
-import React, { Component, useEffect,useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import * as OBC from 'openbim-components';
+import {ViewerContext, DataProvider} from '../component/context';
+import Dimensions from './Dimensions';
+
 
 const Main = () => {
-
-  // const [isClippingPaneSelected, setClippingPaneSelected] = useState(false);
+  const {
+  dimensions,
+  setDimensions
   
-  useEffect(() => {
+  } = useContext(ViewerContext);
+
+ const [viewer, setViewer] = useState(null);
+ const [viewerContainer, setViewerContainer] = useState(null);
+  
+  useEffect(async () => {
     // Initialize viewer
     const viewer = new OBC.Components();
-    console.log("viewerLog", viewer)
+    // console.log("viewerLog", viewer)
 
     // Set up scene
     const sceneComponent = new OBC.SimpleScene(viewer);
     viewer.scene = sceneComponent;
     const scene = sceneComponent.get();
     setupLights(scene);
+
 
 
     // Set up renderer
@@ -63,21 +73,24 @@ const Main = () => {
 
   // Simple Clipper 
 
-  const clipper = new OBC.EdgesClipper(viewer);
+  const clipper = new OBC.SimpleClipper(viewer, OBC.SimplePlane);
   console.log("Clipping", clipper)
  
   viewer.tools.add("clipper", clipper);
   clipper.enabled = true
   
+
  
-  
+
+
   // / Add toolbar and IFC loader
   
   const mainToolbar = new OBC.Toolbar(viewer);
   mainToolbar.addChild(
     ifcLoader.uiElement.get("main"),
     clipper.uiElement.get("main"),
-    propertiesProcessor.uiElement.get("main")
+    // dimensions.uiElement.get("main"),
+    propertiesProcessor.uiElement.get("main"),
     
     );
     viewer.ui.addToolbar(mainToolbar);
@@ -89,14 +102,38 @@ const Main = () => {
     //   }
     //   }
 
+    
+    const dimensionsInstance = new OBC.LengthMeasurement(viewer);
+    console.log("dimensionsInstance", dimensionsInstance)
+    setDimensions(dimensionsInstance);
+    viewer.tools.add("dimensions", dimensionsInstance);
 
-    //----------------------------------------------------------------
+    //_______________________________________________________
+    // Floor Plans
+    //_______________________________________________________
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 
     
 
   }, []);
+
+
   // Function to setup lights
   const setupLights = (scene) => {
     const ambientLight = new THREE.AmbientLight(0xE6E7E4, 1);
@@ -105,11 +142,32 @@ const Main = () => {
     scene.add(ambientLight, directionalLight);
     scene.background = new THREE.Color("#202932");
 
+    // Handlers
+    
+    
+
+
+
   };
+
+  const handleDimensionOnClick = () => {
+   
+    dimensions.create();
+  };
+
 
   return (
     <div>
-      <div id="viewer-container"></div>
+      
+      
+    <div id="viewer-container"></div>
+
+    <button onClick={handleDimensionOnClick}>
+      Dimension
+    </button>
+    
+    {/* <Dimensions/> */}
+     
     </div>
   )
 };
