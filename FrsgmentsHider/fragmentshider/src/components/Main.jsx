@@ -3,10 +3,10 @@ import * as OBC from "openbim-components"
 import * as THREE from "three"
 import Stats from 'stats.js/src/Stats.js';
 import * as dat from 'three/examples/jsm/libs/lil-gui.module.min';
+import FragmentHider from "./FragmentHider";
 
-const FragmentsHider =()=>{
-    const [modelCount, setModelCount] = useState("")
-
+const Main =()=>{
+  
 useEffect(()=>{
 
     
@@ -210,11 +210,12 @@ useEffect(()=>{
 
 
     return(
-
+        <div>
         <h1 id="container"style={viewerContainerStyle} > </h1>
-
+        <FragmentHider  />
+        </div>
     )
 
 }
 
-export default FragmentsHider
+export default Main;

@@ -24,6 +24,9 @@ const FragnentsTree =()=> {
       const scene = components.scene.get();
   
       components.camera.controls.setLookAt(10, 10, 10, 0, 0, 0);
+
+
+
   
       const directionalLight = new THREE.DirectionalLight();
       directionalLight.position.set(5, 10, 3);
@@ -37,8 +40,8 @@ const FragnentsTree =()=> {
       const grid = new OBC.SimpleGrid(components, new THREE.Color(0x666666));
       components.renderer.postproduction.customEffects.excludedMeshes.push(grid.get());
 
-      const fragments = new OBC.FragmentManager(components);
-
+      
+      
       async function LoadFragments (){
 
         const fragments = new OBC.FragmentManager(components);
@@ -46,7 +49,7 @@ const FragnentsTree =()=> {
         const data = await file.arrayBuffer();
         const buffer = new Uint8Array(data);
         const model = await fragments.load(buffer);
-    
+        
         const highlighter = new OBC.FragmentHighlighter(components, fragments);
         highlighter.setup();
 
@@ -54,7 +57,6 @@ const FragnentsTree =()=> {
         highlighter.outlinesEnabled = true;
     
         highlighter.update();
-
 
         const classifier = new OBC.FragmentClassifier(components);
 
@@ -66,6 +68,11 @@ const FragnentsTree =()=> {
 
         const modelTree = new OBC.FragmentTree(components);
         await modelTree.init();
+
+
+        modelTree.update(['storeys', 'entities']);
+
+
 
 
         modelTree.onSelected.add((filter) => {
