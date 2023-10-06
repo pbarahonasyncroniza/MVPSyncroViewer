@@ -16,6 +16,7 @@ Synchroniza App Visualizer is a cutting-edge 3D visualization software designed 
 - **Clipping Planes**: Clip and view your 3D models from any direction to better understand its composition.
 - **Floor Plans Creation**: Generate detailed floor plans to guide your construction crew.
 - **Dimension Measurement**: Measure any 3D element directly within the software.
+- **Advance Filters** : Generate advences Filters 
 
 
 ## Tecnologies
