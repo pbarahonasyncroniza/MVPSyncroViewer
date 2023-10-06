@@ -54,11 +54,15 @@ const FragmentsExploder =()=>{
             model.properties = await properties.json();
 
             classifier.byStorey(model);
-            const exploder = new OBC.FragmentExploder(components);
-            const culler = new OBC.ScreenCuller(components);
 
+            const exploder = new OBC.FragmentExploder(components);
+
+            const culler = new OBC.ScreenCuller(components);
             container.addEventListener("mouseup", () => culler.needsUpdate = true);
             container.addEventListener("wheel", () => culler.needsUpdate = true);
+
+
+
         
             for(const fragment of model.items) {
               culler.add(fragment.mesh);
@@ -80,11 +84,14 @@ const FragmentsExploder =()=>{
             components.renderer.onBeforeUpdate.add(() => stats.begin());
             components.renderer.onAfterUpdate.add(() => stats.end());
         
-
+            
 
 
   }
+
   LoadModel()
+  
+  
 
 },[])
 const viewerContainerStyle = {
