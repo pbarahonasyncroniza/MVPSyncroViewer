@@ -183,14 +183,19 @@ useEffect(()=>{
     
     
         components.ui.addToolbar(mainToolbar)
-        container.ondblclick = () => dimensions.create();
-        container.ondblclick = () => clippingPlane.create();
-        
+        container.ondblclick = () => {
+            dimensions.create();
+            clippingPlane.create();
+        };
         window.onkeydown = (e) => { 
-          if(e.code === "delete" || e.code === "Backspace") {
-          clippingPlane.deleteAll();
-          dimensions.deleteAll()
-          }
+            try {
+                if(e.code === "delete" || e.code === "Backspace") {
+                    clippingPlane.deleteAll();
+                    dimensions.deleteAll();
+                }
+            } catch (error) {
+                console.error("Error al borrar:", error);
+            }
         }
 
 
