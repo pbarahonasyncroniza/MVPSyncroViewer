@@ -55,6 +55,9 @@ useEffect(()=>{
             const model = await fragments.load(buffer);
             const properties = await fetch("model.json");
             model.properties = await properties.json();
+
+
+
             const highlighter = new OBC.FragmentHighlighter(components, fragments);
             highlighter.setup();
             components.renderer.postproduction.customEffects.outlineEnabled = true;
@@ -82,7 +85,7 @@ useEffect(()=>{
             }
             );
 
-
+            //Hider
 
             const hider = new OBC.FragmentHider(components);
             await hider.loadCached();
@@ -212,7 +215,7 @@ useEffect(()=>{
     return(
         <div>
         <h1 id="container"style={viewerContainerStyle} > </h1>
-        <FragmentHider  />
+        {/* <FragmentHider  /> */}
         </div>
     )
 
