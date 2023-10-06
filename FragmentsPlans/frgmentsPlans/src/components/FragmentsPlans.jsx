@@ -54,10 +54,9 @@ const modelRef = useRef
         const file = await fetch('model.frag');
         const data = await file.arrayBuffer();
         const buffer = new Uint8Array(data);
-        const model = await fragments.load(buffer);
-              
-         const properties = await fetch ('model.json')
-         model.properties = await properties.json()
+        const model = await fragments.load(buffer); 
+        const properties = await fetch ('model.json')
+        model.properties = await properties.json()
 
 
         for(const fragment of model.items) {
@@ -107,8 +106,7 @@ const modelRef = useRef
     materialManager.addMeshes("white", meshes);
 
     const plans = new OBC.FragmentPlans(components);
-    setPlans(plans)
-      await plans.computeAllPlanViews(model);
+    await plans.computeAllPlanViews(model);
 
     
     const hider = new OBC.FragmentHider(components);
@@ -188,7 +186,7 @@ LoadModel()
 
 
 
-},[])
+},[model])
 
 
 const viewerContainerStyle = {
