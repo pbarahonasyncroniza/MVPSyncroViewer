@@ -204,13 +204,7 @@ const modelRef = useRef
     map.zoom = 0.2;
 
     // CubeMap
-    const boxMaterial = new THREE.MeshStandardMaterial({ color: '#6528D7' });
-  const boxGeometry = new THREE.BoxGeometry(3, 3, 3);
-	const cube = new THREE.Mesh(boxGeometry, boxMaterial);
-	cube.position.set(0, 1.5, 0);
-	scene.add(cube);
-
-	components.meshes.push(cube);
+   
 
 	const directionalLight = new THREE.DirectionalLight();
 	directionalLight.position.set(5, 10, 3);
