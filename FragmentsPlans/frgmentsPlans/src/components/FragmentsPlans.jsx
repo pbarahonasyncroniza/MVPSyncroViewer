@@ -79,6 +79,7 @@ const modelRef = useRef
 
 
     postproduction.customEffects.outlineEnabled = true;
+    const exploder = new OBC.FragmentExploder(components);
 
 
     const classifier = new OBC.FragmentClassifier(components);
@@ -148,10 +149,17 @@ const modelRef = useRef
     mainToolbar.name = "Main Toolbar";
     components.ui.addToolbar(mainToolbar);
     mainToolbar.addChild(plans.uiElement.get('main')    
+
+    
     
     );
 
+    const toolbar = new OBC.Toolbar(components);
+            toolbar.addChild(exploder.uiElement.get("main"));
+            components.ui.addToolbar(toolbar);
 
+
+            
     plans.onNavigated.add(() => {
         postproduction.customEffects.glossEnabled = false;
         materialManager.setBackgroundColor(whiteColor);
@@ -176,6 +184,18 @@ const modelRef = useRef
 
     components.renderer.onBeforeUpdate.add(() => stats.begin());
     components.renderer.onAfterUpdate.add(() => stats.end());
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Mini Map
     const map = new OBC.MiniMap(components);
