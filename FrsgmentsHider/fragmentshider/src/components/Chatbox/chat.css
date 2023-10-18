@@ -1,0 +1,16 @@
+.maincontainer{
+background-color: black;
+}
+.custom-message-input{
+
+    background-color: "red";
+    color:"white"
+  }
+
+
+  .content-input{
+
+    background-color: "red";
+    color:"white";
+    overflow-y: auto;
+  }

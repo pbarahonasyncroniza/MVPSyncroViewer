@@ -51,6 +51,15 @@ useEffect(()=>{
             // es que se define Model que es ocupado en todas las demas funcionalidades
         async function LoadFragments() {
 
+                    //plans 1
+
+                    const culler = new OBC.ScreenCuller(components);
+                    container.addEventListener('mouseup', () => culler.needsUpdate = true);
+                    container.addEventListener('wheel', () => culler.needsUpdate = true);
+
+
+
+
             const fragments = new OBC.FragmentManager(components);
             const file = await fetch("model.frag");
             const dataBlob = await file.arrayBuffer();
@@ -59,7 +68,9 @@ useEffect(()=>{
             const properties = await fetch("model.json");
             model.properties = await properties.json();
 
+                  
 
+                    
             // Higliting aca se define el poder seleccionar algun elemento 3D 
             const highlighter = new OBC.FragmentHighlighter(components, fragments);
             highlighter.setup();
@@ -90,6 +101,7 @@ useEffect(()=>{
             }
             );
 
+
             //Hider
 
             const hider = new OBC.FragmentHider(components);
@@ -100,7 +112,11 @@ useEffect(()=>{
             classifier.byEntity(model);
 
             const classifications = classifier.get();
+            const found = classifier.find({entities: ["IFCWALLSTANDARDCASE", "IFCWALL"]});
 
+
+
+            
             const storeys = {};
             const storeyNames = Object.keys(classifications.storeys);
             for (const name of storeyNames) {
@@ -172,8 +188,8 @@ useEffect(()=>{
             const renderer2 = components.renderer;
             renderer.onBeforeUpdate.add(() => stats.begin());
             renderer.onAfterUpdate.add(() => stats.end());
-                
 
+           
     }
 
         }
@@ -184,11 +200,13 @@ useEffect(()=>{
 
         // Simple Clipper 
     
-          const clippingPlane = new OBC.EdgesClipper(components);
-          console.log("Clipping", clippingPlane)
-     
-          components.tools.add("clipper", clippingPlane);
-          clippingPlane.enabled = true
+          const clipper = new OBC.EdgesClipper(components);
+        //   console.log("Clipping", clipper)
+        //Clipper plans
+        
+    
+          components.tools.add("clipper", clipper);
+          clipper.enabled = true
          
           
     
@@ -206,7 +224,7 @@ useEffect(()=>{
     
          const mainToolbar = new OBC.Toolbar(components)
           mainToolbar.addChild(
-         clippingPlane.uiElement.get("main"),
+         clipper.uiElement.get("main"),
           dimensions.uiElement.get("main"),
           
           
@@ -218,12 +236,12 @@ useEffect(()=>{
         components.ui.addToolbar(mainToolbar)
         container.ondblclick = () => {
             dimensions.create();
-            clippingPlane.create();
+            clipper.create();
         };
         window.onkeydown = (e) => { 
             try {
                 if(e.code === "delete" || e.code === "Backspace") {
-                    clippingPlane.deleteAll();
+                    clipper.deleteAll();
                     dimensions.deleteAll();
                 }
             } catch (error) {
